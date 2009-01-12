@@ -12,9 +12,20 @@ h2. Features
 
 h2. Available Assertions
 
+ * @assert=@
+ * @assert-not=@
+ * @assert-in-delta@
  * @assert-that@
  * @assert-not@
  * @assert-nil@
+ * @assert-fn@
+ * @assert-not-fn@
+ * @assert-instance@
+ * @assert-isa@
+ * @assert-match@
+ * @assert-throws@
+ * @flunk@ (always fails)
+ * @success@, @failure@, @assert-truth@ (for defining custom assertions)
 
 h2. Example Usage
 
