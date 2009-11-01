@@ -1,6 +1,7 @@
 (ns clj-unit.console-reporter
-  (:use clj-unit.utils clojure.contrib.str-utils
-        (clj-backtrace core repl)))
+  (:use (clj-unit utils)
+        (clojure.contrib str-utils)
+        (clj-stacktrace core repl)))
 
 (defn- test-runner-elem?
   [elem]
@@ -14,9 +15,8 @@
   (let [parsed (parse-exception e)
         elems  (:trace-elems parsed)
         user-elems (take-while (complement test-runner-elem?) elems)]
-    (binding [*use-color* true]
-      (println (with-color :red (str e)))
-      (print-trace-elems user-elems))))
+    (pst-message-on *out* true (str e))
+    (pst-elems-on *out* true user-elems)))
 
 (def +console-reporter+
   {:init
