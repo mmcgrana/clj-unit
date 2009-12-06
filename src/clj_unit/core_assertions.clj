@@ -91,7 +91,7 @@
       ~form
       (failure "Expecting throw, got none")
       (catch ~klass e#
-        (let [e-message# (.getMessage e#)]
+        (let [e-message# (.getMessage #^Exception e#)]
           (assert-truth (or (not ~message-re) (re-match? ~message-re e-message#))
             (format "Expected message matching \"%s\" got \"%s\""
               ~message-re e-message#))))
