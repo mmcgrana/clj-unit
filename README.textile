@@ -5,7 +5,7 @@ h1. clj-unit
 h2. Features
 
  * Extremely small core implementation with a simple interface.
- * Pluggable reporters, with a built-in console reporter that uses "clj-backtrace":http://github.com/mmcgrana/clj-backtrace to provide trimmed, cleaned, and colorized backtraces on unit test errors.
+ * Pluggable reporters, with a built-in console reporter that uses "clj-stacktrace":http://github.com/mmcgrana/clj-stacktrace to provide trimmed, cleaned, and colorized backtraces on unit test errors.
  * Stateless facade for reporters, eliminating the need for them to maintain their own global state.
  * Many built in assertions.
  * New assertions can be implemented as stand-alone functions; they don't need to be methods or macros.
