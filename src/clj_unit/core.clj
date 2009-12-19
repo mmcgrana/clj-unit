@@ -1,4 +1,5 @@
 (ns clj-unit.core
+  (:require (clj-stacktrace [core :as st]))
   (:use (clj-unit utils console-reporter)
         (clojure.contrib except)))
 
@@ -14,16 +15,16 @@
 ; return the updated state, which it will then be passed back on the next
 ; report call, etc.
 ; 
-; :init     <ns-syms>                     return starting state
-; :start    <state ns-sym>                start of namespace test suite
-; :test     <state test-info>             start of 1 test, note possibly :pending
-; :success  <state test-info>             assertion within a test succeeded
-; :failure  <state test-info> <message>   assertion within a test failed
-; :pass     <state test-info>             1 test passsed without error or failure
-; :error    <state test-finfo> <thrown>   uncaught error during test
-; :finish   <state ns-sym>                end of namespace test suite
-; :end      <state>                       end of all test suites
-; :no-tests <state ns-sym>                no-tests for namespace
+; :init     <ns-syms>                           return starting state
+; :start    <state ns-sym>                      start of namespace test suite
+; :test     <state test-info>                   start of 1 test, note possibly :pending
+; :success  <state test-info>                   assertion within a test succeeded
+; :failure  <state test-info message file line> assertion within a test failed
+; :pass     <state test-info>                   1 test passsed without error or failure
+; :error    <state test-info thrown>            uncaught error during test
+; :finish   <state ns-sym>                      end of namespace test suite
+; :end      <state>                             end of all test suites
+; :no-tests <state ns-sym>                      no-tests for namespace
 
 (defmacro deftest
   "Define a unit test."
@@ -83,6 +84,13 @@
 (defn failure
   "Report a failed assertion, with a message indicating the reason."
   [message]
-  (report :failure *test-info* message))
+  (let [elems     (st/parse-trace-elems (.getStackTrace (Thread/currentThread)))
+        rev-elems (reverse elems)
+        user-elem (first-before
+                    #(and (:clojure %) (re-match? #"^assert." (:fn %)))
+                    rev-elems)
+        file      (:file user-elem)
+        line      (:line user-elem)]
+  (report :failure *test-info* message file line)))
 
 (load "core_assertions")

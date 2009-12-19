@@ -18,3 +18,8 @@
   []
   [(var-get clojure.lang.Compiler/SOURCE)
    (var-get clojure.lang.Compiler/LINE)])
+
+(defn first-before [f coll]
+  "Returns the elemenet before the first element of call for which (f elem)
+  is truthy."
+  (some #(and (f (second %)) (first %)) (partition 2 1 coll)))

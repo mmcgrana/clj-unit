@@ -47,9 +47,9 @@
      (fn [state test-info]
        (update state :pass-count inc))
    :failure
-     (fn [state test-info message]
-       (printf "\nFAIL: %s (%s:%s)\n%s\n"
-         (:doc test-info) (:file test-info) (:line test-info) message)
+     (fn [state test-info message file line]
+       (printf "\nFAIL: %s (%s:%s) [%s:%s]\n%s\n"
+         (:doc test-info) (:file test-info) (:line test-info) file line message)
        (update state :failure-count inc))
    :error
      (fn [state test-info #^Exception e]
