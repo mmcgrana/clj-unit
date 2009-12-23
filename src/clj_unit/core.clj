@@ -87,7 +87,8 @@
   (let [elems     (st/parse-trace-elems (.getStackTrace (Thread/currentThread)))
         rev-elems (reverse elems)
         user-elem (first-before
-                    #(and (:clojure %) (re-match? #"^assert." (:fn %)))
+                    #(and (:clojure %)
+                          (re-match? #"^(assert.)|(failure)" (:fn %)))
                     rev-elems)
         file      (:file user-elem)
         line      (:line user-elem)]
