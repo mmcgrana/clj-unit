@@ -30,6 +30,13 @@
                     (< actual (+ expected delta)))
     (format "Expected %s +-%s, got %s" expected delta actual)))
 
+(defn assert-in
+  "Assert that a value is one of given set."
+  [expected-from actual]
+  (assert-truth (contains? expected-from actual)
+    (format "Expected one of %s, got %s"
+      (pr-str expected-from) (pr-str actual))))
+
 (defn assert-that
   "Assert that a value is logically true - i.e. not nil or false."
   [val]
