@@ -91,8 +91,10 @@
 (defmacro assert-throws
   "Assert that a form throws. Note that unlike all other assertions, which are
   functions, assert-throws is macro."
-  ([form]            (assert-throws Exception nil        form))
-  ([message-re form] (assert-throws Exception message-re form))
+  ([form]
+   `(assert-throws Exception nil ~form))
+  ([message-re form]
+   `(assert-throws Exception ~message-re ~form))
   ([klass message-re form]
    `(try
       ~form
