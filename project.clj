@@ -1,4 +1,4 @@
-(defproject clj-unit "0.1.0"
+(defproject clj-unit "0.1.1"
   :description "A simple unit testing library for Clojure."
   :url "http://github.com/mmcgrana/clj-unit"
   :dependencies [[org.clojure/clojure "1.2.0-RC2"]
